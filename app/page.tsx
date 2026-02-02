@@ -7,26 +7,76 @@ import ContactForm from '@/components/ContactForm';
 export default function Home() {
   const [activeCard, setActiveCard] = useState(0);
   const [showScrollHint, setShowScrollHint] = useState(true);
+  const [heroExpanded, setHeroExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Mobile detection
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+
     const handleScroll = (e: Event) => {
       const target = e.target as HTMLElement;
-      const scrollLeft = target.scrollLeft;
-      const cardWidth = target.offsetWidth;
-      const newActiveCard = Math.round(scrollLeft / cardWidth);
-      setActiveCard(newActiveCard);
 
-      // Hide scroll hint after first interaction
-      if (scrollLeft > 50) {
-        setShowScrollHint(false);
-      }
+      // Debounce for smoother performance
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        if (isMobile) {
+          // Vertical scroll on mobile - detect which section is in view
+          // Only count elements with snap-item class (actual sections)
+          const sections = Array.from(target.querySelectorAll('.snap-item')) as HTMLElement[];
+          const viewportHeight = window.innerHeight;
+
+          // Find which section is most visible
+          let maxVisibility = 0;
+          let activeIndex = 0;
+
+          sections.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+            const sectionTop = rect.top;
+            const sectionBottom = rect.bottom;
+
+            // Calculate how much of the section is visible in viewport
+            const visibleTop = Math.max(sectionTop, 0);
+            const visibleBottom = Math.min(sectionBottom, viewportHeight);
+            const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+            const visibilityRatio = visibleHeight / viewportHeight;
+
+            if (visibilityRatio > maxVisibility) {
+              maxVisibility = visibilityRatio;
+              activeIndex = index;
+            }
+          });
+
+          setActiveCard(activeIndex);
+        } else {
+          // Horizontal scroll on desktop
+          const scrollLeft = target.scrollLeft;
+          const cardWidth = target.offsetWidth;
+          const newActiveCard = Math.round(scrollLeft / cardWidth);
+          setActiveCard(newActiveCard);
+        }
+
+        // Hide scroll hint after first interaction
+        if ((isMobile ? target.scrollTop : target.scrollLeft) > 50) {
+          setShowScrollHint(false);
+        }
+      }, 50);
     };
 
     const scrollContainer = document.getElementById('scroll-container');
     scrollContainer?.addEventListener('scroll', handleScroll);
 
-    // Keyboard navigation
+    // Keyboard navigation (desktop only)
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isMobile) return;
+
       if (e.key === 'ArrowRight' && activeCard < 3) {
         const container = document.getElementById('scroll-container');
         container?.scrollTo({
@@ -48,38 +98,47 @@ export default function Home() {
     const timer = setTimeout(() => setShowScrollHint(false), 3000);
 
     return () => {
+      clearTimeout(scrollTimeout);
       scrollContainer?.removeEventListener('scroll', handleScroll);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', checkMobile);
       clearTimeout(timer);
     };
-  }, [activeCard]);
+  }, [activeCard, isMobile]);
 
   return (
-    <main className="h-screen flex overflow-hidden">
-      {/* Left Side - Hero */}
-      <section className="w-2/5 border-r border-[var(--border)] flex flex-col justify-between p-12 overflow-y-auto">
+    <main className="h-screen flex flex-col md:flex-row overflow-hidden">
+      {/* Left Side - Hero (Desktop) / Top Header (Mobile) */}
+      <section className={`
+        ${isMobile ? 'w-full border-b' : 'w-2/5 md:w-1/2 lg:w-2/5 border-r'}
+        border-[var(--border)] flex flex-col justify-between
+        ${isMobile ? 'p-6' : 'p-8 lg:p-12'}
+        ${isMobile ? (heroExpanded ? 'h-auto' : 'h-auto') : 'overflow-y-auto'}
+      `}>
         <div>
-          <div className="mb-12">
-            <h1 className="font-serif text-6xl mb-3 text-[var(--accent)] animate-fade-in">
+          <div className={isMobile ? 'mb-6' : 'mb-12'}>
+            <h1 className={`font-serif ${isMobile ? 'text-3xl' : 'text-4xl lg:text-6xl'} mb-3 text-[var(--accent)] animate-fade-in`}>
               {personal.name}
             </h1>
-            <p className="text-sm tracking-widest uppercase text-[var(--foreground)] opacity-60 animate-fade-in stagger-1">
+            <p className="text-xs md:text-sm tracking-widest uppercase text-[var(--foreground)] opacity-60 animate-fade-in stagger-1">
               {personal.title}
             </p>
           </div>
 
-          <div className="space-y-4 mb-12">
-            {personal.summary.map((line, i) => (
-              <p
-                key={i}
-                className={`text-sm leading-relaxed text-[var(--foreground)] opacity-80 animate-fade-in stagger-${i + 2}`}
-              >
-                {line}
-              </p>
-            ))}
-          </div>
+          {!isMobile && (
+            <>
+              <div className="space-y-4 mb-12">
+                {personal.summary.map((line, i) => (
+                  <p
+                    key={i}
+                    className={`text-sm leading-relaxed text-[var(--foreground)] opacity-80 animate-fade-in stagger-${i + 2}`}
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
 
-          <div className="space-y-3 animate-fade-in stagger-4">
+              <div className="space-y-3 animate-fade-in stagger-4">
             <a
               href={`mailto:${personal.email}`}
               className="block text-xs hover:text-[var(--accent)] transition-colors"
@@ -106,60 +165,66 @@ export default function Home() {
             >
               {personal.linkedin}
             </a>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-xs hover:text-[var(--accent)] transition-colors pt-2 border-t border-[var(--border)]"
-            >
-              View Resume ↗
-            </a>
-          </div>
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-xs hover:text-[var(--accent)] transition-colors pt-2 border-t border-[var(--border)]"
+                >
+                  View Resume ↗
+                </a>
+              </div>
+            </>
+          )}
         </div>
 
-        {/* Nav Indicator */}
-        <div className="flex gap-2 animate-fade-in stagger-5">
-          {['Work', 'Projects', 'Now', 'Contact'].map((label, i) => (
-            <button
-              key={label}
-              onClick={() => {
-                const container = document.getElementById('scroll-container');
-                if (container) {
-                  container.scrollTo({
-                    left: i * container.offsetWidth,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-              className={`text-xs px-3 py-1 border transition-all ${
-                activeCard === i
-                  ? 'border-[var(--accent)] text-[var(--accent)]'
-                  : 'border-[var(--border)] text-[var(--foreground)] opacity-40 hover:opacity-70'
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        {/* Nav Indicator - Desktop only (moves to bottom on mobile) */}
+        {!isMobile && (
+          <div className="flex gap-2 animate-fade-in stagger-5 mt-auto">
+            {['Work', 'Projects', 'Now', 'Contact'].map((label, i) => (
+              <button
+                key={label}
+                onClick={() => {
+                  const container = document.getElementById('scroll-container');
+                  if (container) {
+                    container.scrollTo({
+                      left: i * container.offsetWidth,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
+                className={`text-xs px-3 py-1 border transition-all ${
+                  activeCard === i
+                    ? 'border-[var(--accent)] text-[var(--accent)]'
+                    : 'border-[var(--border)] text-[var(--foreground)] opacity-40 hover:opacity-70'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
 
-      {/* Right Side - Horizontal Scroll Cards */}
+      {/* Right Side - Horizontal Scroll Cards (Desktop) / Vertical Scroll (Mobile) */}
       <section
         id="scroll-container"
-        className={`w-3/5 flex overflow-x-auto overflow-y-hidden horizontal-scroll snap-container relative ${
-          activeCard < 3 ? 'scroll-gradient' : ''
-        }`}
+        className={`
+          ${isMobile ? 'w-full h-full flex-col overflow-y-auto' : 'w-3/5 md:w-1/2 lg:w-3/5 flex overflow-x-auto overflow-y-hidden'}
+          horizontal-scroll snap-container relative
+          ${!isMobile && activeCard < 3 ? 'scroll-gradient' : ''}
+        `}
       >
         {/* Scroll Hint */}
-        {showScrollHint && (
+        {showScrollHint && !isMobile && (
           <div className="absolute top-8 right-12 z-10 flex items-center gap-2 text-[var(--accent)] pointer-events-none transition-opacity duration-1000 opacity-100">
             <span className="text-xs tracking-wider font-medium">SCROLL →</span>
           </div>
         )}
 
         {/* Work Card */}
-        <div className="min-w-full h-full p-12 overflow-y-auto snap-item">
-          <h2 className="text-3xl font-serif mb-8 text-[var(--accent)]">Work</h2>
+        <div className={`${isMobile ? 'min-h-screen w-full' : 'min-w-full h-full'} ${isMobile ? 'p-6' : 'p-8 lg:p-12'} overflow-y-auto snap-item`}>
+          <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif ${isMobile ? 'mb-6' : 'mb-8'} text-[var(--accent)]`}>Work</h2>
           <div className="space-y-8">
             {work.map((job, i) => (
               <div key={i} className="pb-8 border-b border-[var(--border)] last:border-0">
@@ -191,8 +256,8 @@ export default function Home() {
         </div>
 
         {/* Projects Card */}
-        <div className="min-w-full h-full p-12 overflow-y-auto snap-item">
-          <h2 className="text-3xl font-serif mb-8 text-[var(--accent)]">Projects</h2>
+        <div className={`${isMobile ? 'min-h-screen w-full' : 'min-w-full h-full'} ${isMobile ? 'p-6' : 'p-8 lg:p-12'} overflow-y-auto snap-item`}>
+          <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif ${isMobile ? 'mb-6' : 'mb-8'} text-[var(--accent)]`}>Projects</h2>
           <div className="space-y-8">
             {projects.map((project, i) => (
               <div key={i} className="pb-8">
@@ -244,8 +309,8 @@ export default function Home() {
         </div>
 
         {/* Now Card */}
-        <div className="min-w-full h-full p-12 overflow-y-auto snap-item">
-          <h2 className="text-3xl font-serif mb-8 text-[var(--accent)]">Now</h2>
+        <div className={`${isMobile ? 'min-h-screen w-full' : 'min-w-full h-full'} ${isMobile ? 'p-6' : 'p-8 lg:p-12'} overflow-y-auto snap-item`}>
+          <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif ${isMobile ? 'mb-6' : 'mb-8'} text-[var(--accent)]`}>Now</h2>
           <div className="space-y-8">
             <div>
               <p className="text-sm mb-6 text-[var(--accent)] opacity-80">{now.status}</p>
@@ -272,8 +337,8 @@ export default function Home() {
         </div>
 
         {/* Contact Card */}
-        <div className="min-w-full h-full p-12 overflow-y-auto snap-item">
-          <h2 className="text-3xl font-serif mb-8 text-[var(--accent)]">Contact</h2>
+        <div className={`${isMobile ? 'min-h-screen w-full' : 'min-w-full h-full'} ${isMobile ? 'p-6' : 'p-8 lg:p-12'} overflow-y-auto snap-item`}>
+          <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif ${isMobile ? 'mb-6' : 'mb-8'} text-[var(--accent)]`}>Contact</h2>
           <div className="max-w-xl">
             <p className="text-sm leading-relaxed opacity-80 mb-8">
               {contact.description}
@@ -323,6 +388,39 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Mobile Bottom Navigation */}
+      {isMobile && (
+        <nav className="fixed bottom-0 left-0 right-0 bg-[var(--background)] border-t border-[var(--border)] flex justify-around items-center py-3 z-50">
+          {['Work', 'Projects', 'Now', 'Contact'].map((label, i) => (
+            <button
+              key={label}
+              onClick={() => {
+                const container = document.getElementById('scroll-container');
+                if (container) {
+                  // Query for actual section elements (snap-items only)
+                  const sections = container.querySelectorAll('.snap-item');
+                  const sectionElement = sections[i] as HTMLElement;
+                  if (sectionElement) {
+                    sectionElement.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start'
+                    });
+                    // Manually set active card to prevent delay
+                    setActiveCard(i);
+                  }
+                }
+              }}
+              className={`flex flex-col items-center gap-1 px-3 py-1 transition-all ${
+                activeCard === i ? 'text-[var(--accent)]' : 'text-[var(--foreground)] opacity-40'
+              }`}
+            >
+              <div className={`h-1 w-6 rounded-full transition-all ${activeCard === i ? 'bg-[var(--accent)]' : 'bg-transparent'}`} />
+              <span className="text-[10px] tracking-wider uppercase">{label}</span>
+            </button>
+          ))}
+        </nav>
+      )}
     </main>
   );
 }
