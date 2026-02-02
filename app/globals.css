@@ -263,4 +263,13 @@ a:hover {
   .snap-container {
     scrollbar-width: none;
   }
+
+  /* Smooth hero collapse animation */
+  section {
+    will-change: padding;
+  }
+
+  h1, p, div {
+    will-change: font-size, margin, opacity;
+  }
 }

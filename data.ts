@@ -132,5 +132,5 @@ export const education = [
 ];
 
 export const contact = {
-  description: "Open to product roles in AI/ML, enterprise SaaS, or healthcare tech. Targeting Summer 2026 internships in SF or Austin."
+  description: "Open to product roles in AI/ML, enterprise SaaS, or healthcare tech. Targeting Summer 2026 internships in SF, NYC, Austin, or anywhere in the US. Willing to relocate."
 };

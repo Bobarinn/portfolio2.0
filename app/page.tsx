@@ -7,7 +7,7 @@ import ContactForm from '@/components/ContactForm';
 export default function Home() {
   const [activeCard, setActiveCard] = useState(0);
   const [showScrollHint, setShowScrollHint] = useState(true);
-  const [heroExpanded, setHeroExpanded] = useState(false);
+  const [heroExpanded, setHeroExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -55,6 +55,13 @@ export default function Home() {
           });
 
           setActiveCard(activeIndex);
+
+          // Collapse hero on mobile when scrolled past first section
+          if (activeIndex > 0) {
+            setHeroExpanded(false);
+          } else {
+            setHeroExpanded(true);
+          }
         } else {
           // Horizontal scroll on desktop
           const scrollLeft = target.scrollLeft;
@@ -112,29 +119,61 @@ export default function Home() {
       <section className={`
         ${isMobile ? 'w-full border-b' : 'w-2/5 md:w-1/2 lg:w-2/5 border-r'}
         border-[var(--border)] flex flex-col justify-between
-        ${isMobile ? 'p-6' : 'p-8 lg:p-12'}
+        ${isMobile ? (heroExpanded ? 'p-6' : 'px-6 py-3') : 'p-8 lg:p-12'}
         ${isMobile ? (heroExpanded ? 'h-auto' : 'h-auto') : 'overflow-y-auto'}
+        transition-all duration-300 ease-in-out
       `}>
         <div>
-          <div className={isMobile ? 'mb-6' : 'mb-12'}>
-            <h1 className={`font-serif ${isMobile ? 'text-3xl' : 'text-4xl lg:text-6xl'} mb-3 text-[var(--accent)] animate-fade-in`}>
-              {personal.name}
-            </h1>
-            <p className="text-xs md:text-sm tracking-widest uppercase text-[var(--foreground)] opacity-60 animate-fade-in stagger-1">
-              {personal.title}
-            </p>
+          <div className={`${isMobile ? (heroExpanded ? 'mb-6' : 'mb-0') : 'mb-12'} transition-all duration-300`}>
+            <div
+              className={`flex items-center justify-between ${isMobile && !heroExpanded ? 'cursor-pointer' : ''}`}
+              onClick={() => {
+                if (isMobile && !heroExpanded) {
+                  // Scroll back to top to expand hero
+                  const container = document.getElementById('scroll-container');
+                  if (container) {
+                    container.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }
+              }}
+            >
+              <h1 className={`font-serif ${isMobile ? (heroExpanded ? 'text-3xl' : 'text-xl') : 'text-4xl lg:text-6xl'} ${isMobile && !heroExpanded ? 'mb-0' : 'mb-3'} text-[var(--accent)] transition-all duration-300`}>
+                {personal.name}
+              </h1>
+              {isMobile && !heroExpanded && (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="text-[var(--accent)] opacity-60"
+                >
+                  <path d="M10 13L6 9M10 13L14 9M10 13V7" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+            </div>
           </div>
 
-          <div className={`space-y-4 ${isMobile ? 'mb-6' : 'mb-12'}`}>
-            {personal.summary.map((line, i) => (
-              <p
-                key={i}
-                className={`${isMobile ? 'text-xs' : 'text-sm'} leading-relaxed text-[var(--foreground)] opacity-80 animate-fade-in stagger-${i + 2}`}
-              >
-                {line}
-              </p>
-            ))}
-          </div>
+          {(!isMobile || heroExpanded) && (
+            <p className="text-xs md:text-sm tracking-widest uppercase text-[var(--foreground)] opacity-60 mb-6 transition-opacity duration-300">
+              {personal.title}
+            </p>
+          )}
+
+          {(!isMobile || heroExpanded) && (
+            <div className={`space-y-4 ${isMobile ? 'mb-6' : 'mb-12'} transition-all duration-300`}>
+              {personal.summary.map((line, i) => (
+                <p
+                  key={i}
+                  className={`${isMobile ? 'text-xs' : 'text-sm'} leading-relaxed text-[var(--foreground)] opacity-80 animate-fade-in stagger-${i + 2}`}
+                >
+                  {line}
+                </p>
+              ))}
+            </div>
+          )}
 
           {!isMobile && (
             <div className="space-y-3 animate-fade-in stagger-4">
