@@ -1,10 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { rateLimit, getClientIp, isOriginAllowed } from '@/lib/ratelimit';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
+    // Check if origin is allowed
+    if (!isOriginAllowed(req)) {
+      return NextResponse.json(
+        { error: 'Unauthorized origin. Access denied.' },
+        { status: 403 }
+      );
+    }
+
+    // Rate limiting: 3 contact form submissions per hour per IP
+    const clientIp = getClientIp(req);
+    const rateLimitResult = rateLimit(`contact:${clientIp}`, 3, 60 * 60 * 1000);
+
+    if (!rateLimitResult.success) {
+      const resetDate = new Date(rateLimitResult.reset);
+      const minutesUntilReset = Math.ceil((resetDate.getTime() - Date.now()) / 60000);
+
+      return NextResponse.json(
+        {
+          error: `Too many messages sent. Please try again in ${minutesUntilReset} minute${minutesUntilReset !== 1 ? 's' : ''}.`
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': '3',
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': resetDate.toISOString(),
+          }
+        }
+      );
+    }
+
     const { name, email, subject, message } = await req.json();
 
     // Validation
@@ -98,10 +130,19 @@ export async function POST(req: NextRequest) {
       // Don't fail the request if confirmation email fails
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Message sent successfully!',
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Message sent successfully!',
+      },
+      {
+        headers: {
+          'X-RateLimit-Limit': '3',
+          'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+          'X-RateLimit-Reset': new Date(rateLimitResult.reset).toISOString(),
+        }
+      }
+    );
   } catch (error) {
     console.error('Contact API error:', error);
     return NextResponse.json(
