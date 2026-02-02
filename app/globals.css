@@ -158,6 +158,13 @@ a:hover {
     width: 100% !important;
   }
 
+  /* Last section (Contact) - allow scrolling within section */
+  .snap-item:last-child {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+    min-height: 100vh;
+  }
+
   /* Hide scroll gradient on mobile */
   .scroll-gradient::after {
     display: none;
@@ -169,10 +176,7 @@ a:hover {
     height: 3px;
   }
 
-  /* Add padding for bottom nav */
-  #scroll-container {
-    padding-bottom: 60px;
-  }
+  /* No global padding needed - handled per section */
 
   /* Smooth touch scrolling */
   * {
@@ -201,6 +205,17 @@ a:hover {
 
   h2 {
     font-size: 1.5rem !important;
+  }
+
+  /* Tighter padding on tiny screens */
+  .snap-item {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Stack flex items on very small screens */
+  .flex {
+    flex-wrap: wrap;
   }
 }
 

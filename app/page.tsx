@@ -125,56 +125,54 @@ export default function Home() {
             </p>
           </div>
 
-          {!isMobile && (
-            <>
-              <div className="space-y-4 mb-12">
-                {personal.summary.map((line, i) => (
-                  <p
-                    key={i}
-                    className={`text-sm leading-relaxed text-[var(--foreground)] opacity-80 animate-fade-in stagger-${i + 2}`}
-                  >
-                    {line}
-                  </p>
-                ))}
-              </div>
+          <div className={`space-y-4 ${isMobile ? 'mb-6' : 'mb-12'}`}>
+            {personal.summary.map((line, i) => (
+              <p
+                key={i}
+                className={`${isMobile ? 'text-xs' : 'text-sm'} leading-relaxed text-[var(--foreground)] opacity-80 animate-fade-in stagger-${i + 2}`}
+              >
+                {line}
+              </p>
+            ))}
+          </div>
 
-              <div className="space-y-3 animate-fade-in stagger-4">
-            <a
-              href={`mailto:${personal.email}`}
-              className="block text-xs hover:text-[var(--accent)] transition-colors"
-            >
-              {personal.email}
-            </a>
-            <a
-              href={`mailto:${personal.workEmail}`}
-              className="block text-xs hover:text-[var(--accent)] transition-colors"
-            >
-              {personal.workEmail}
-            </a>
-            <a
-              href={`tel:${personal.phone}`}
-              className="block text-xs hover:text-[var(--accent)] transition-colors"
-            >
-              {personal.phone}
-            </a>
-            <a
-              href={`https://${personal.linkedin}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-xs hover:text-[var(--accent)] transition-colors"
-            >
-              {personal.linkedin}
-            </a>
-                <a
-                  href="/resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-xs hover:text-[var(--accent)] transition-colors pt-2 border-t border-[var(--border)]"
-                >
-                  View Resume ↗
-                </a>
-              </div>
-            </>
+          {!isMobile && (
+            <div className="space-y-3 animate-fade-in stagger-4">
+              <a
+                href={`mailto:${personal.email}`}
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                {personal.email}
+              </a>
+              <a
+                href={`mailto:${personal.workEmail}`}
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                {personal.workEmail}
+              </a>
+              <a
+                href={`tel:${personal.phone}`}
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                {personal.phone}
+              </a>
+              <a
+                href={`https://${personal.linkedin}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                {personal.linkedin}
+              </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs hover:text-[var(--accent)] transition-colors pt-2 border-t border-[var(--border)]"
+              >
+                View Resume ↗
+              </a>
+            </div>
           )}
         </div>
 
@@ -228,19 +226,19 @@ export default function Home() {
           <div className="space-y-8">
             {work.map((job, i) => (
               <div key={i} className="pb-8 border-b border-[var(--border)] last:border-0">
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-lg font-medium">{job.company}</h3>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 gap-2">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <h3 className={`${isMobile ? 'text-base' : 'text-lg'} font-medium`}>{job.company}</h3>
                       {job.remote && (
-                        <span className="text-[10px] px-2 py-0.5 border border-[var(--accent)] text-[var(--accent)] opacity-60 tracking-wider">
+                        <span className="text-[10px] px-2 py-0.5 border border-[var(--accent)] text-[var(--accent)] opacity-60 tracking-wider whitespace-nowrap">
                           REMOTE
                         </span>
                       )}
                     </div>
                     <p className="text-xs opacity-60">{job.location}</p>
                   </div>
-                  <span className="text-xs opacity-60">{job.period}</span>
+                  <span className="text-xs opacity-60 whitespace-nowrap">{job.period}</span>
                 </div>
                 <p className="text-sm mb-4 text-[var(--accent)] opacity-80">{job.role}</p>
                 <ul className="space-y-2">
@@ -261,9 +259,9 @@ export default function Home() {
           <div className="space-y-8">
             {projects.map((project, i) => (
               <div key={i} className="pb-8">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-lg font-medium">{project.name}</h3>
-                  <span className="text-xs opacity-60">{project.period}</span>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 gap-1">
+                  <h3 className={`${isMobile ? 'text-base' : 'text-lg'} font-medium`}>{project.name}</h3>
+                  {project.period && <span className="text-xs opacity-60 whitespace-nowrap">{project.period}</span>}
                 </div>
                 <p className="text-sm mb-4 opacity-80">{project.description}</p>
                 <ul className="space-y-2 mb-6">
@@ -292,12 +290,12 @@ export default function Home() {
               <div className="space-y-6">
                 {education.map((edu, i) => (
                   <div key={i}>
-                    <div className="flex justify-between items-start mb-2">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1">
                       <div>
                         <h4 className="text-sm font-medium">{edu.school}</h4>
                         <p className="text-xs opacity-60">{edu.location}</p>
                       </div>
-                      <span className="text-xs opacity-60">{edu.graduation}</span>
+                      <span className="text-xs opacity-60 whitespace-nowrap">{edu.graduation}</span>
                     </div>
                     <p className="text-xs opacity-80">{edu.degree}</p>
                     <p className="text-xs opacity-60 mt-1">GPA: {edu.gpa}</p>
@@ -337,7 +335,7 @@ export default function Home() {
         </div>
 
         {/* Contact Card */}
-        <div className={`${isMobile ? 'min-h-screen w-full' : 'min-w-full h-full'} ${isMobile ? 'p-6' : 'p-8 lg:p-12'} overflow-y-auto snap-item`}>
+        <div className={`${isMobile ? 'min-h-screen w-full' : 'min-w-full h-full'} ${isMobile ? 'p-6 pb-32' : 'p-8 lg:p-12'} overflow-y-auto snap-item`}>
           <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif ${isMobile ? 'mb-6' : 'mb-8'} text-[var(--accent)]`}>Contact</h2>
           <div className="max-w-xl">
             <p className="text-sm leading-relaxed opacity-80 mb-8">
