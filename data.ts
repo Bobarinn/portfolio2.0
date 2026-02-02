@@ -1,11 +1,12 @@
 export const personal = {
-  name: "Victor Abobarin",
+  name: "Victor K. Abobarin",
   title: "Product Manager",
   summary: [
     "Building AI products that work. Product manager with technical depth in LLM-powered workflows and enterprise SaaS.",
     "0→1 to scale. Shipped products from concept to 10K+ users and $120K+ ARR."
   ],
   email: "koladeabobarin@gmail.com",
+  workEmail: "kolade@xophie.ai",
   phone: "254-447-4042",
   linkedin: "linkedin.com/in/koladeabobarin",
   location: "Waco, Texas"
@@ -17,6 +18,7 @@ export const work = [
     location: "Bristol, UK",
     role: "Product Manager",
     period: "Mar 2025 – Jun 2025",
+    remote: true,
     highlights: [
       "Reduced engineering rework 30% with tighter PRDs and requirements across 5 client engagements",
       "Supported $80K+ contract value through aligned execution and delivery plans",
@@ -28,6 +30,7 @@ export const work = [
     location: "Quezon City, Philippines",
     role: "Product Manager & Bubble Developer",
     period: "Jul 2022 – Feb 2025",
+    remote: true,
     highlights: [
       "Led marketplace product for 10,000+ users across onboarding, matching, and monetization",
       "Drove 2× MAU growth and 150% performance improvement in six months",

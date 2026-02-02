@@ -2,6 +2,7 @@
 
 import { personal, work, projects, now, education, contact } from '@/data';
 import { useEffect, useState } from 'react';
+import ContactForm from '@/components/ContactForm';
 
 export default function Home() {
   const [activeCard, setActiveCard] = useState(0);
@@ -86,6 +87,12 @@ export default function Home() {
               {personal.email}
             </a>
             <a
+              href={`mailto:${personal.workEmail}`}
+              className="block text-xs hover:text-[var(--accent)] transition-colors"
+            >
+              {personal.workEmail}
+            </a>
+            <a
               href={`tel:${personal.phone}`}
               className="block text-xs hover:text-[var(--accent)] transition-colors"
             >
@@ -98,6 +105,14 @@ export default function Home() {
               className="block text-xs hover:text-[var(--accent)] transition-colors"
             >
               {personal.linkedin}
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-xs hover:text-[var(--accent)] transition-colors pt-2 border-t border-[var(--border)]"
+            >
+              View Resume ↗
             </a>
           </div>
         </div>
@@ -150,7 +165,14 @@ export default function Home() {
               <div key={i} className="pb-8 border-b border-[var(--border)] last:border-0">
                 <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h3 className="text-lg font-medium">{job.company}</h3>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-lg font-medium">{job.company}</h3>
+                      {job.remote && (
+                        <span className="text-[10px] px-2 py-0.5 border border-[var(--accent)] text-[var(--accent)] opacity-60 tracking-wider">
+                          REMOTE
+                        </span>
+                      )}
+                    </div>
                     <p className="text-xs opacity-60">{job.location}</p>
                   </div>
                   <span className="text-xs opacity-60">{job.period}</span>
@@ -250,45 +272,53 @@ export default function Home() {
         </div>
 
         {/* Contact Card */}
-        <div className="min-w-full h-full p-12 flex flex-col justify-center snap-item">
+        <div className="min-w-full h-full p-12 overflow-y-auto snap-item">
           <h2 className="text-3xl font-serif mb-8 text-[var(--accent)]">Contact</h2>
-          <div className="space-y-6">
+          <div className="max-w-xl">
             <p className="text-sm leading-relaxed opacity-80 mb-8">
               {contact.description}
             </p>
 
-            <div className="space-y-4">
-              <div>
-                <p className="text-xs opacity-60 mb-1">Email</p>
-                <a
-                  href={`mailto:${personal.email}`}
-                  className="text-sm hover:text-[var(--accent)] transition-colors"
-                >
-                  {personal.email}
-                </a>
-              </div>
+            <div className="mb-8">
+              <ContactForm />
+            </div>
 
-              <div>
-                <p className="text-xs opacity-60 mb-1">Phone</p>
-                <a
-                  href={`tel:${personal.phone}`}
-                  className="text-sm hover:text-[var(--accent)] transition-colors"
-                >
-                  {personal.phone}
-                </a>
-              </div>
-
-              <div>
-                <p className="text-xs opacity-60 mb-1">LinkedIn</p>
-                <a
-                  href={`https://${personal.linkedin}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm hover:text-[var(--accent)] transition-colors"
-                >
-                  {personal.linkedin}
-                </a>
-              </div>
+            <div className="pt-6 border-t border-[var(--border)] space-y-3">
+              <p className="text-xs opacity-60 mb-3">Or reach out directly:</p>
+              <a
+                href={`mailto:${personal.email}`}
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                {personal.email}
+              </a>
+              <a
+                href={`mailto:${personal.workEmail}`}
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                {personal.workEmail}
+              </a>
+              <a
+                href={`tel:${personal.phone}`}
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                {personal.phone}
+              </a>
+              <a
+                href={`https://${personal.linkedin}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                {personal.linkedin}
+              </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs hover:text-[var(--accent)] transition-colors pt-2 border-t border-[var(--border)]"
+              >
+                View Resume ↗
+              </a>
             </div>
           </div>
         </div>
