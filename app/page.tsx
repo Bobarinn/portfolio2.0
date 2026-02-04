@@ -211,6 +211,14 @@ export default function Home() {
               >
                 View Resume ↗
               </a>
+              <a
+                href="/transcript.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                View Current Transcript ↗
+              </a>
             </div>
           )}
         </div>
@@ -338,6 +346,16 @@ export default function Home() {
                     </div>
                     <p className="text-xs opacity-80">{edu.degree}</p>
                     <p className="text-xs opacity-60 mt-1">GPA: {edu.gpa}</p>
+                    {edu.school === "Baylor University" && (
+                      <a
+                        href="/transcript.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block text-xs hover:text-[var(--accent)] transition-colors mt-2 border-t border-[var(--border)] pt-2"
+                      >
+                        View Current Transcript ↗
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>
@@ -420,6 +438,14 @@ export default function Home() {
                 className="block text-xs hover:text-[var(--accent)] transition-colors pt-2 border-t border-[var(--border)]"
               >
                 View Resume ↗
+              </a>
+              <a
+                href="/transcript.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                View Current Transcript ↗
               </a>
             </div>
           </div>
