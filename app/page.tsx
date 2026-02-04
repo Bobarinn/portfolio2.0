@@ -204,6 +204,14 @@ export default function Home() {
                 {personal.linkedin}
               </a>
               <a
+                href="https://github.com/Bobarinn"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                github.com/Bobarinn
+              </a>
+              <a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -430,6 +438,14 @@ export default function Home() {
                 className="block text-xs hover:text-[var(--accent)] transition-colors"
               >
                 {personal.linkedin}
+              </a>
+              <a
+                href="https://github.com/Bobarinn"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs hover:text-[var(--accent)] transition-colors"
+              >
+                github.com/Bobarinn
               </a>
               <a
                 href="/resume.pdf"
