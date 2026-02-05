@@ -1,5 +1,5 @@
 export const personal = {
-  name: "Victor K. Abobarin",
+  name: "Victor Kolade Abobarin",
   title: "Product Manager",
   summary: [
     "Building AI products that work. Product manager with technical depth in LLM-powered workflows and enterprise SaaS.",
