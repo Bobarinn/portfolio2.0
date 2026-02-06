@@ -315,7 +315,18 @@ export default function Home() {
             {projects.map((project, i) => (
               <div key={i} className="pb-8">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 gap-1">
-                  <h3 className={`${isMobile ? 'text-base' : 'text-lg'} font-medium`}>{project.name}</h3>
+                  {project.url ? (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${isMobile ? 'text-base' : 'text-lg'} font-medium hover:text-[var(--accent)] transition-colors`}
+                    >
+                      {project.name} ↗
+                    </a>
+                  ) : (
+                    <h3 className={`${isMobile ? 'text-base' : 'text-lg'} font-medium`}>{project.name}</h3>
+                  )}
                   {project.period && <span className="text-xs opacity-60 whitespace-nowrap">{project.period}</span>}
                 </div>
                 <p className="text-sm mb-4 opacity-80">{project.description}</p>

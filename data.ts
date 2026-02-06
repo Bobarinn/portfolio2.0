@@ -55,6 +55,7 @@ export const work = [
 export const projects = [
   {
     name: "Xophie.ai",
+    url: "https://xophie.ai",
     period: "",
     description: "Real-time AI voice agent platform for healthcare workflows",
     details: [
@@ -64,6 +65,19 @@ export const projects = [
       "Optimized for latency, reliability, and operational accuracy in healthcare settings"
     ],
     tech: ["LiveKit", "Python", "LLMs", "Real-time WebRTC", "Healthcare AI"]
+  },
+  {
+    name: "AI Note Taker",
+    url: "https://xophieai.vercel.app/",
+    period: "",
+    description: "AI-powered meeting note taker with real-time transcription and insights",
+    details: [
+      "Integrated AssemblyAI for accurate speech-to-text transcription",
+      "Connected with Recall AI for meeting recording and playback",
+      "Built full-stack solution with Next.js frontend and Node.js/Python backends",
+      "Automated note generation and action item extraction from meetings"
+    ],
+    tech: ["Next.js", "Node.js", "Python", "AssemblyAI", "Recall AI"]
   }
 ];
 
