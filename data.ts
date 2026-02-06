@@ -77,7 +77,7 @@ export const projects = [
       "Built full-stack solution with Next.js frontend and Node.js/Python backends",
       "Automated note generation and action item extraction from meetings"
     ],
-    tech: ["Next.js", "Node.js", "Python", "AssemblyAI", "Recall AI"]
+    tech: ["Next.js", "Node.js", "Python", "Go", "Google Cloud Functions", "AssemblyAI", "Recall AI"]
   }
 ];
 
