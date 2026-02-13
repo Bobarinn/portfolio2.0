@@ -1,5 +1,5 @@
 export const personal = {
-  name: "Victor Kolade Abobarin",
+  name: "Victor \n Kolade Abobarin",
   title: "Product Manager",
   summary: [
     "Building AI products that work. Product manager with technical depth in LLM-powered workflows and enterprise SaaS.",
@@ -78,6 +78,20 @@ export const projects = [
       "Automated note generation and action item extraction from meetings"
     ],
     tech: ["Next.js", "Node.js", "Python", "Go", "Google Cloud Functions", "AssemblyAI", "Recall AI"]
+  },
+  {
+    name: "Episod",
+    url: "https://github.com/Bobarinn/episod-video-genie",
+    period: "",
+    description: "Go-based backend service for generating AI-powered faceless short-form videos",
+    details: [
+      "Built modular API and Worker services with Redis queue-based processing for scalability",
+      "Orchestrated multi-stage pipeline: AI video planning, TTS narration, styled image generation, and FFmpeg rendering",
+      "Integrated OpenAI GPT-4 for video structure planning and Google Gemini for consistent styled visuals",
+      "Implemented Cartesia TTS for natural narration and Supabase Storage for asset management",
+      "Automated 90-120 second video generation with configurable graphics presets for social media"
+    ],
+    tech: ["Go", "PostgreSQL", "Redis", "Supabase", "OpenAI GPT-4", "Cartesia TTS", "Google Gemini", "FFmpeg", "Docker"]
   }
 ];
 
