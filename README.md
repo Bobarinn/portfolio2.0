@@ -1,4 +1,4 @@
-# Victor Kolade Abobarin - Portfolio
+# Kolade Victor Abobarin - Portfolio
 
 A single-screen portfolio showcasing work, projects, and contact information with AI-powered contact form.
 

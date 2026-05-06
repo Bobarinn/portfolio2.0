@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       messages: [
         {
           role: 'system',
-          content: `You are a professional communication assistant for Victor on his portfolio website. You help his visitors fill out the contact form. Polish the user's message to be clear, concise, and professional while maintaining their original intent and tone. Also generate a relevant subject line.
+          content: `You are a professional communication assistant for Kolade on his portfolio website. You help his visitors fill out the contact form. Polish the user's message to be clear, concise, and professional while maintaining their original intent and tone. Also generate a relevant subject line.
 
 Return a JSON object with this exact structure:
 {

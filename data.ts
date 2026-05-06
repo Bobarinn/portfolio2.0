@@ -1,9 +1,9 @@
 export const personal = {
-  name: "Victor \n Kolade Abobarin",
-  title: "Product Manager",
+  name: "Kolade \n Victor Abobarin",
+  title: "AI Product Manager",
   summary: [
-    "Building AI products that work. Product manager with technical depth in LLM-powered workflows and enterprise SaaS.",
-    "0→1 to scale. Shipped products from concept to 10K+ users and $120K+ ARR."
+    "AI PM who ships workflows customers trust — from discovery and roadmap to launch in regulated and high-growth environments.",
+    "0→1 to scale: revenue, retention, and automation wins across fintech, marketplaces, healthcare AI, and consulting delivery."
   ],
   email: "koladeabobarin@gmail.com",
   workEmail: "kolade@xophie.ai",
@@ -17,37 +17,36 @@ export const work = [
     company: "DI9ITAL LIMITED",
     location: "Bristol, UK",
     role: "Product Manager",
-    period: "Mar 2025 – Jun 2025",
+    period: "Feb 2025 – Jun 2025",
     remote: true,
     highlights: [
-      "Reduced engineering rework 30% with tighter PRDs and requirements across 5 client engagements",
-      "Supported $80K+ contract value through aligned execution and delivery plans",
-      "Improved onboarding efficiency 50% using reusable components and data-driven flows"
+      "Cut feature rework ~30% (~300 billable hours) via discovery and zero-based workflow redesign across 5 concurrent client programs",
+      "Supported $80K+ contract momentum with workshops that aligned executives, clients, and engineering on Jira-tracked roadmaps",
+      "Reduced contributor ramp from two weeks to under a week with standardized PRDs, templates, and repeatable onboarding"
     ]
   },
   {
     company: "BLUESHIRT INC.",
     location: "Quezon City, Philippines",
-    role: "Product Manager & Bubble Developer",
+    role: "Product Manager",
     period: "Jul 2022 – Feb 2025",
     remote: true,
     highlights: [
-      "Led marketplace product for 10,000+ users across onboarding, matching, and monetization",
-      "Drove 2× MAU growth and 150% performance improvement in six months",
-      "Launched payment integration: $0 to $120K+ ARR with Maya API",
-      "Led Node.js migration: 10,000+ accounts, 99% uptime, 3-month dual-run",
-      "Improved job match accuracy 40% through skills-based recommendation redesign"
+      "Grew consumer revenue $0→$120K+ ARR owning pricing, subscriptions, payments, and core ops",
+      "Launched ML/automation for 100K+ records with ~90% less manual review; clients estimated $200K+ annual savings",
+      "Led Bubble→Node migration for 10K+ users and 100K+ records; 99% uptime through one-month dual-run",
+      "Doubled MAU in six months and improved key performance ~150% by prioritizing from Amplitude and SQL-backed behavior"
     ]
   },
   {
     company: "AZA GLOBAL INC.",
     location: "Lagos, Nigeria",
-    role: "Product Manager",
-    period: "Jan 2022 – Jun 2022",
+    role: "Co-Founder",
+    period: "Jan 2022 – Jul 2022",
     highlights: [
-      "0→1 for QPay: 500+ users, $5K+ transaction volume in first month",
-      "Reduced chargeback risk 40% with KYC/AML and anti-fraud workflows",
-      "Cut time-to-first-transaction to under 24 hours via bi-weekly releases"
+      "Shipped cross-border fintech 0→1: 500+ users and $5K+ volume in month one via trust-first UX and payout flows",
+      "Defined KYC and anti-fraud flows for compliance and lower loss exposure",
+      "Drove time-to-first transaction under 24 hours with a steady release cadence"
     ]
   }
 ];
@@ -57,88 +56,77 @@ export const projects = [
     name: "Xophie.ai",
     url: "https://xophie.ai",
     period: "",
-    description: "Real-time AI voice agent platform for healthcare workflows",
+    description: "0→1 AI voice product that automates healthcare front-desk scheduling",
     details: [
-      "Led 0→1 development using LiveKit Python agent framework",
-      "Enabled autonomous reasoning and execution of complex business workflows",
-      "Orchestrated conversational logic, system actions, and backend integrations",
-      "Optimized for latency, reliability, and operational accuracy in healthcare settings"
+      "Modeled ~60% reduction in call handling; owned discovery with 10+ practice owners, metrics, and HIPAA-aligned rollout",
+      "Prioritized roadmap across latency, reliability, and vendor risk; shipped with ops playbooks, not a one-off demo",
+      "Positioned the agent for real scheduling workflows rather than generic chat"
     ],
-    tech: ["LiveKit", "Python", "LLMs", "Real-time WebRTC", "Healthcare AI"]
+    tech: ["Voice AI", "Healthcare", "Product discovery", "LLM agents"]
   },
   {
     name: "AI Note Taker",
     url: "https://xophieai.vercel.app/",
     period: "",
-    description: "AI-powered meeting note taker with real-time transcription and insights",
+    description: "Personal AI assistant for live meetings — capture, actions, and searchable history",
     details: [
-      "Integrated AssemblyAI for accurate speech-to-text transcription",
-      "Connected with Recall AI for meeting recording and playback",
-      "Built full-stack solution with Next.js frontend and Node.js/Python backends",
-      "Automated note generation and action item extraction from meetings"
+      "Scoped MVP around transcription quality vs. cost and iterated from weekly real use",
+      "Optimized for fast recall after client and academic sessions, not novelty features",
+      "Shipped end-to-end experience from capture to structured outputs"
     ],
-    tech: ["Next.js", "Node.js", "Python", "Go", "Google Cloud Functions", "AssemblyAI", "Recall AI"]
+    tech: ["Speech AI", "LLM summarization", "Full-stack MVP"]
   },
   {
     name: "Episod",
     url: "https://github.com/Bobarinn/episod-video-genie",
     period: "",
-    description: "Go-based backend service for generating AI-powered faceless short-form videos",
+    description: "MVP for AI-assisted short-form video — creator journey and batch workflow first",
     details: [
-      "Built modular API and Worker services with Redis queue-based processing for scalability",
-      "Orchestrated multi-stage pipeline: AI video planning, TTS narration, styled image generation, and FFmpeg rendering",
-      "Integrated OpenAI GPT-4 for video structure planning and Google Gemini for consistent styled visuals",
-      "Implemented Cartesia TTS for natural narration and Supabase Storage for asset management",
-      "Automated 90-120 second video generation with configurable graphics presets for social media"
+      "Defined user journey for faceless shorts; deprioritized scope that didn’t move completion rate",
+      "Aligned pipeline stages (script, voice, visuals) to what creators actually reorder and tweak",
+      "Learning vehicle for generative content ops and automation tradeoffs"
     ],
-    tech: ["Go", "PostgreSQL", "Redis", "Supabase", "OpenAI GPT-4", "Cartesia TTS", "Google Gemini", "FFmpeg", "Docker"]
+    tech: ["Generative AI", "Video MVP", "Workflow design"]
   }
 ];
 
 export const now = {
   status: "Graduating May 2027",
   focus: [
-    "Finishing MBA & M.Sc. in Information Systems at Baylor University (4.0 GPA)",
-    "Building expertise in LLM-powered workflows and enterprise product strategy",
+    "MBA & M.S. Information Systems at Baylor (Product Management track, 4.0)",
+    "Doubling down on AI product strategy, agents, and enterprise rollout"
   ],
   interests: [
-    "AI agents and workflow automation",
-    "Product-led growth and 0→1 execution",
-    "Technical product management at the intersection of AI and enterprise systems"
+    "AI agents that replace brittle workflows",
+    "Product judgment in regulated spaces",
+    "Shipping fast without breaking trust"
   ]
 };
 
 export const skills = {
   product: [
-    "Product Strategy & Roadmapping",
-    "Technical Program Management",
-    "PRDs & Requirements",
-    "User Research & Customer Discovery",
-    "Stakeholder Management",
-    "Agile/Scrum",
-    "Cross-Functional Leadership",
-    "Product Analytics",
-    "Go-to-Market Planning"
+    "AI & workflow products",
+    "Discovery & roadmapping",
+    "Prioritization & experimentation",
+    "Stakeholders & delivery",
+    "GTM & monetization",
+    "Healthcare & fintech context"
   ],
   technical: [
-    "LLMs & Prompt Engineering",
-    "Agentic AI Systems",
-    "Workflow Automation",
-    "LangChain",
-    "LiveKit (Python Agents, WebRTC)",
-    "Python",
-    "SQL",
-    "API Design & Integrations",
-    "ML/OCR Pipelines",
-    "AWS, GCP"
+    "LLMs & agentic workflows",
+    "Prompting & eval mindset",
+    "Automation & integrations",
+    "SQL for product questions",
+    "Analytics stacks (e.g. Amplitude)"
   ],
   tools: [
     "Jira",
     "Confluence",
+    "Figma",
     "GitHub",
     "Postman",
-    "Figma",
-    "Firebase"
+    "Claude Code",
+    "Codex"
   ]
 };
 
@@ -160,5 +148,5 @@ export const education = [
 ];
 
 export const contact = {
-  description: "Open to product roles in AI/ML, enterprise SaaS, or healthcare tech. Targeting Summer 2026 internships in SF, NYC, Austin, or anywhere in the US. Willing to relocate."
+  description: "Open to AI product roles — agents, enterprise SaaS, healthcare tech, and fintech. Summer 2026 internships: SF, NYC, Austin, or US-wide; willing to relocate."
 };

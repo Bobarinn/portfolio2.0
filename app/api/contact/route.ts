@@ -57,8 +57,8 @@ export async function POST(req: NextRequest) {
     const contactEmail = process.env.CONTACT_EMAIL || 'koladeabobarin@gmail.com';
     const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
 
-    // Send email to Victor
-    const { data: victorEmail, error: victorError } = await resend.emails.send({
+    // Send notification to portfolio inbox
+    const { error: notifyError } = await resend.emails.send({
       from: `Portfolio Contact <${fromEmail}>`,
       to: contactEmail,
       replyTo: email,
@@ -87,12 +87,12 @@ export async function POST(req: NextRequest) {
       `,
     });
 
-    if (victorError) {
-      console.error('Victor email error:', victorError);
+    if (notifyError) {
+      console.error('Contact notification email error:', notifyError);
       return NextResponse.json(
         {
           error: 'Email service configuration issue. Please verify your domain at resend.com/domains or contact directly at koladeabobarin@gmail.com',
-          details: victorError.message
+          details: notifyError.message
         },
         { status: 500 }
       );
@@ -100,9 +100,9 @@ export async function POST(req: NextRequest) {
 
     // Send confirmation email to sender (optional - won't fail if this errors)
     const { error: confirmError } = await resend.emails.send({
-      from: `Victor Kolade Abobarin <${fromEmail}>`,
+      from: `Kolade Victor Abobarin <${fromEmail}>`,
       to: email,
-      subject: 'Message received – Victor Kolade Abobarin',
+      subject: 'Message received – Kolade Victor Abobarin',
       html: `
         <div style="font-family: monospace; color: #e8e8e8; background: #0a0a0a; padding: 32px; border: 1px solid #262626;">
           <h2 style="color: #f59e0b; margin-bottom: 24px;">Thanks for reaching out, ${name}</h2>
@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
           </div>
 
           <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #262626; font-size: 12px; opacity: 0.6;">
-            Victor Kolade Abobarin<br/>
+            Kolade Victor Abobarin<br/>
             Product Manager<br/>
             koladeabobarin@gmail.com
           </div>

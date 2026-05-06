@@ -6,8 +6,8 @@ import ConsentBanner from "@/components/ConsentBanner";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Victor Kolade Abobarin – Product Manager",
-  description: "Product manager building AI products that work. Technical depth in LLM-powered workflows and enterprise SaaS.",
+  title: "Kolade Victor Abobarin – Product Manager",
+  description: "AI Product Manager — discovery through launch in regulated and high-growth products. Agents, automation, and workflows customers trust.",
 };
 
 export default function RootLayout({
